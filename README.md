@@ -1,15 +1,173 @@
 # Calculator
-A front-end web development project in ReactJS. I wrote a blog post about the project, where you can read about programming concepts I used and about app's features and functionality. You can find it on my [medium profile](https://medium.com/@marko.libor/javascript-calculator-61df22851919).
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="stylesheet.css" value="0" disabled/>
+  </head>
+  <body>
+    <div class="calculator">
+      <input type="text" class="calculator-screen">
+      <div class="calculator-keys">
+        <div class="row">
+          <button class="all-clear">AC</button>
+          <button class="percentage">%</button>
+          <button class="operator" value="/">&divide;</button>
+        </div>
+        <div class="row">
+          <button class="number" value="7">7</button>
+          <button class="number" value="8">8</button>
+          <button class="number" value="9">9</button>
+          <button class="operator" value="*">&times;</button>
+        </div>
+        <div class="row">
+          <button class="number" value="4">4</button>
+          <button class="number" value="5">5</button>
+          <button class="number" value="6">6</button>
+          <button class="operator" value="-">-</button>
+        </div>
+        <div class="row">
+          <button class="number" value="1">1</button>
+          <button class="number" value="2">2</button>
+          <button class="number" value="3">3</button>
+          <button class="operator" value="+">+</button>
+        </div>
+        <div class="row">
+          <button class="number zero-btn" value="0">0</button>
+          <button class="decimal" value=".">.</button>
+          <button class="equal-sign">=</button>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="script.js">
+        let outputUpper = document.querySelector('#upper');
+    // lower output is for showing the result
+    let outputLower = document.querySelector('#lower');
 
-## Technologies used
-* React.JS
-* JavaScript 
-* HTML5
-* CSS3
+    // function to get number input
+    function pressNum(e) {
+      if (outputLower.innerHTML === '0') {
+        outputLower.innerHTML = e.innerHTML;
+      } else {
+        outputLower.innerHTML += e.innerHTML;
+      }
+    }
 
-## Setup and Run
+    // clear all
+    function pressAllClear() {
+      outputUpper.innerHTML = '';
+      outputLower.innerHTML = '0';
+    }
 
-Try the app [here](https://niglm.csb.app/).
+    // clear one
+    function pressClear() {
+      outputLower.innerHTML = outputLower.innerHTML.slice(0, -1);
+    }
 
-## Screenshot of the App
-![Screenshot of the App](./screenshot.png)
+    // calculate button
+    function pressEqual() {
+      let exp = outputLower.innerHTML;
+      outputUpper.innerHTML = exp;
+      exp = exp.replace(/×/g, '*').replace(/÷/g, '/');
+      let result;
+      try {
+        result = eval(exp);
+        // if decimal number more than 4 decimal places
+        if (result.toString().indexOf('.') !== -1) {
+          result = result.toFixed(4);
+        }
+      } catch (e) {
+        result = 'Error';
+      }
+      outputLower.innerHTML = result;
+    }
+
+    function pressOperator(e) {
+      // check last operator
+      let lastOperator = outputLower.innerHTML.slice(-1);
+      if (lastOperator.includes('+', '-', '×', '÷')) {
+        output.innerHTML = outputLower.innerHTML.slice(0, -1) + e.innerHTML;
+      } else {
+        outputLower.innerHTML += e.innerHTML;
+      }
+    }
+
+    function pressDot() {
+      outputLower.innerHTML += '.';
+    }
+
+    function pressBracket(e) {
+      outputLower.innerHTML += e.innerHTML;
+    }
+
+    // attach keyboard event
+    document.addEventListener('keydown', function (e) {
+      switch (e.key) {
+        case '0':
+          pressNum(document.querySelector('button:nth-child(2)'));
+          break;
+        case '1':
+          pressNum(document.querySelector('button:nth-child(5)'));
+          break;
+        case '2':
+          pressNum(document.querySelector('button:nth-child(6)'));
+          break;
+        case '3':
+          pressNum(document.querySelector('button:nth-child(7)'));
+          break;
+        case '4':
+          pressNum(document.querySelector('button:nth-child(9)'));
+          break;
+        case '5':
+          pressNum(document.querySelector('button:nth-child(10)'));
+          break;
+        case '6':
+          pressNum(document.querySelector('button:nth-child(11)'));
+          break;
+        case '7':
+          pressNum(document.querySelector('button:nth-child(13)'));
+          break;
+        case '8':
+          pressNum(document.querySelector('button:nth-child(14)'));
+          break;
+        case '9':
+          pressNum(document.querySelector('button:nth-child(15)'));
+          break;
+        case '+':
+          pressOperator(document.querySelector('button:nth-child(4)'));
+          break;
+        case '-':
+          pressOperator(document.querySelector('button:nth-child(8)'));
+          break;
+        case '*':
+          pressOperator(document.querySelector('button:nth-child(12)'));
+          break;
+        case '/':
+          pressOperator(document.querySelector('button:nth-child(16)'));
+          break;
+        case '.':
+          pressDot();
+          break;
+        case '(':
+          pressBracket(document.querySelector('button:nth-child(18)'));
+          break;
+        case ')':
+          pressBracket(document.querySelector('button:nth-child(19)'));
+          break;
+        case 'Enter':
+          // prevent default action
+          e.preventDefault();
+          pressEqual();
+          break;
+        case 'Backspace':
+          pressClear();
+          break;
+        case 'Escape':
+          pressAllClear();
+          break;
+      }
+    });
+</script>
+  </body>
+</html>
