@@ -1,173 +1,58 @@
-# Calculator
-<!DOCTYPE>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Calculator</title>
-    <link rel="stylesheet" href="stylesheet.css" value="0" disabled/>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora:100,200,300,400,500,600,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:100,200,300,400,500,600,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400,500,600,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Barlow:100,200,300,400,500,600,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>JavaScript Calculator</title>
   </head>
+
   <body>
-    <div class="calculator">
-      <input type="text" class="calculator-screen">
-      <div class="calculator-keys">
-        <div class="row">
-          <button class="all-clear">AC</button>
-          <button class="percentage">%</button>
-          <button class="operator" value="/">&divide;</button>
-        </div>
-        <div class="row">
-          <button class="number" value="7">7</button>
-          <button class="number" value="8">8</button>
-          <button class="number" value="9">9</button>
-          <button class="operator" value="*">&times;</button>
-        </div>
-        <div class="row">
-          <button class="number" value="4">4</button>
-          <button class="number" value="5">5</button>
-          <button class="number" value="6">6</button>
-          <button class="operator" value="-">-</button>
-        </div>
-        <div class="row">
-          <button class="number" value="1">1</button>
-          <button class="number" value="2">2</button>
-          <button class="number" value="3">3</button>
-          <button class="operator" value="+">+</button>
-        </div>
-        <div class="row">
-          <button class="number zero-btn" value="0">0</button>
-          <button class="decimal" value=".">.</button>
-          <button class="equal-sign">=</button>
-        </div>
-      </div>
-    </div>
-    <script type="text/javascript" src="script.js">
-        let outputUpper = document.querySelector('#upper');
-    // lower output is for showing the result
-    let outputLower = document.querySelector('#lower');
-
-    // function to get number input
-    function pressNum(e) {
-      if (outputLower.innerHTML === '0') {
-        outputLower.innerHTML = e.innerHTML;
-      } else {
-        outputLower.innerHTML += e.innerHTML;
-      }
-    }
-
-    // clear all
-    function pressAllClear() {
-      outputUpper.innerHTML = '';
-      outputLower.innerHTML = '0';
-    }
-
-    // clear one
-    function pressClear() {
-      outputLower.innerHTML = outputLower.innerHTML.slice(0, -1);
-    }
-
-    // calculate button
-    function pressEqual() {
-      let exp = outputLower.innerHTML;
-      outputUpper.innerHTML = exp;
-      exp = exp.replace(/×/g, '*').replace(/÷/g, '/');
-      let result;
-      try {
-        result = eval(exp);
-        // if decimal number more than 4 decimal places
-        if (result.toString().indexOf('.') !== -1) {
-          result = result.toFixed(4);
-        }
-      } catch (e) {
-        result = 'Error';
-      }
-      outputLower.innerHTML = result;
-    }
-
-    function pressOperator(e) {
-      // check last operator
-      let lastOperator = outputLower.innerHTML.slice(-1);
-      if (lastOperator.includes('+', '-', '×', '÷')) {
-        output.innerHTML = outputLower.innerHTML.slice(0, -1) + e.innerHTML;
-      } else {
-        outputLower.innerHTML += e.innerHTML;
-      }
-    }
-
-    function pressDot() {
-      outputLower.innerHTML += '.';
-    }
-
-    function pressBracket(e) {
-      outputLower.innerHTML += e.innerHTML;
-    }
-
-    // attach keyboard event
-    document.addEventListener('keydown', function (e) {
-      switch (e.key) {
-        case '0':
-          pressNum(document.querySelector('button:nth-child(2)'));
-          break;
-        case '1':
-          pressNum(document.querySelector('button:nth-child(5)'));
-          break;
-        case '2':
-          pressNum(document.querySelector('button:nth-child(6)'));
-          break;
-        case '3':
-          pressNum(document.querySelector('button:nth-child(7)'));
-          break;
-        case '4':
-          pressNum(document.querySelector('button:nth-child(9)'));
-          break;
-        case '5':
-          pressNum(document.querySelector('button:nth-child(10)'));
-          break;
-        case '6':
-          pressNum(document.querySelector('button:nth-child(11)'));
-          break;
-        case '7':
-          pressNum(document.querySelector('button:nth-child(13)'));
-          break;
-        case '8':
-          pressNum(document.querySelector('button:nth-child(14)'));
-          break;
-        case '9':
-          pressNum(document.querySelector('button:nth-child(15)'));
-          break;
-        case '+':
-          pressOperator(document.querySelector('button:nth-child(4)'));
-          break;
-        case '-':
-          pressOperator(document.querySelector('button:nth-child(8)'));
-          break;
-        case '*':
-          pressOperator(document.querySelector('button:nth-child(12)'));
-          break;
-        case '/':
-          pressOperator(document.querySelector('button:nth-child(16)'));
-          break;
-        case '.':
-          pressDot();
-          break;
-        case '(':
-          pressBracket(document.querySelector('button:nth-child(18)'));
-          break;
-        case ')':
-          pressBracket(document.querySelector('button:nth-child(19)'));
-          break;
-        case 'Enter':
-          // prevent default action
-          e.preventDefault();
-          pressEqual();
-          break;
-        case 'Backspace':
-          pressClear();
-          break;
-        case 'Escape':
-          pressAllClear();
-          break;
-      }
-    });
-</script>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
   </body>
 </html>
